@@ -26,7 +26,7 @@ Networking Libraries, Connection to server over internet:
 Libcurl: https://curl.se/libcurl/
 This can be used for data exchange between a device and a server through a terminal. or used to create a connection between the server and backend.
 
-Or use boost Asio to connect opengGl and client:
+Or use boost Asio to connect openGl and client:
 https://www.boost.org/doc/libs/1_63_0/doc/html/boost_asio.html
 
 
