@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Camera Streaming</title>
+    <style>
+        #video-stream {
+        width: 600px; 
+        height: 400px; 
+        border: 2px solid #333; 
+        border-radius: 5px; 
+        padding: 10px; 
+        }
+    </style>
+</head>
+<body>
+    <h1>WeMars D435 Real-Time Camera Stream</h1>
+
+
+    <video id="video-stream" autoplay></video>
+
+    <script>
+        // JavaScript code to set up the WebSocket connection and display the video
+
+        const hostname = 'localhost';
+        const port = 3000;
+        const webSocketUrl = `ws://${hostname}:${port}`;
+
+        const videoElement = document.getElementById('video-stream');
+
+        // Connect to the Node.js WebSocket
+        const webSocket = new WebSocket(webSocketUrl);
+
+        // Handle WebSocket connection errors
+        webSocket.onerror = (event) => {
+            console.error('WebSocket error:', event);
+        };
+
+        // Handle incoming video frames from the server
+        webSocket.onmessage = (event) => {
+    const videoData = event.data;
+    const mediaStream = new MediaStream([videoData]);
+    
+    // Update the video element's size based on the dimensions of the video data
+    videoElement.srcObject = mediaStream;
+    videoElement.width = mediaStream.getVideoTracks()[0].getSettings().width;
+    videoElement.height = mediaStream.getVideoTracks()[0].getSettings().height;
+};
+
+        // Handle WebSocket disconnections
+        webSocket.onclose = (event) => {
+            console.log('WebSocket closed:', event);
+        };
+    </script>
+</body>
+</html>
